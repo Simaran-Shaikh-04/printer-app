@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Print Rewards — Counter Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ── Masthead ── -->
+  <div class="masthead">
+    <span class="reg-mark"></span>
+    <h1>Print Rewards</h1>
+    <span class="sub" id="baseUrlLabel"></span>
+  </div>
+
+  <!-- ── Today's Summary Bar ── -->
+  <div class="summary-bar">
+    <div class="sum-card">
+      <div class="sum-label">Today's Prints</div>
+      <div class="sum-value" id="s-prints">—</div>
+    </div>
+    <div class="sum-card accent-teal">
+      <div class="sum-label">Revenue</div>
+      <div class="sum-value" id="s-revenue">—</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">Customers</div>
+      <div class="sum-value" id="s-customers">—</div>
+    </div>
+    <div class="sum-card sum-divider">
+      <div class="sum-label">🎨 Color</div>
+      <div class="sum-value sum-small" id="s-color">—</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">🖤 B&amp;W</div>
+      <div class="sum-value sum-small" id="s-bw">—</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">📄 Xerox</div>
+      <div class="sum-value sum-small" id="s-xerox">—</div>
+    </div>
+  </div>
+
+  <!-- ── Order + QR ── -->
+  <div class="grid two" style="margin-top:22px;">
+
+    <!-- ── LIVE ORDER PANEL ── -->
+    <div class="panel order-panel">
+      <h2><span class="reg-mark" style="width:10px;height:10px;"></span> New Order</h2>
+
+      <!-- Step 1: Phone number → auto-lookup -->
+      <label for="orderPhone">Customer phone number</label>
+      <input type="tel" id="orderPhone" placeholder="Type 10-digit number…" maxlength="10" inputmode="numeric" autocomplete="off" />
+      <div class="lookup-status" id="lookupStatus"></div>
+
+      <!-- Customer info card (appears when found) -->
+      <div class="order-cust-card" id="customerCard" style="display:none;">
+        <div class="occ-left">
+          <div class="occ-name"  id="occName">—</div>
+          <div class="occ-phone" id="occPhone">—</div>
+        </div>
+        <div class="occ-right">
+          <span class="badge"   id="occTier">—</span>
+          <span class="occ-pts" id="occPts">—</span>
+          <span class="occ-disc" id="occDisc">—</span>
+        </div>
+      </div>
+
+      <!-- Step 2: Print counts (appear after customer found) -->
+      <div id="countSection" style="display:none;">
+        <div class="print-type-row" style="margin-top:18px;">
+          <div class="print-type-field">
+            <label for="colorPrints">🎨 Color</label>
+            <div class="price-hint">₹10 / pg · 10 pts</div>
+            <input type="number" id="colorPrints" min="0" value="0" />
+          </div>
+          <div class="print-type-field">
+            <label for="bwPrints">🖤 B&amp;W</label>
+            <div class="price-hint">₹4 / pg · 4 pts</div>
+            <input type="number" id="bwPrints" min="0" value="0" />
+          </div>
+          <div class="print-type-field">
+            <label for="xeroxPrints">📄 Xerox</label>
+            <div class="price-hint">₹3 / pg · 3 pts</div>
+            <input type="number" id="xeroxPrints" min="0" value="0" />
+          </div>
+        </div>
+
+        <!-- Live ticket (auto-updates as counts change) -->
+        <div id="ticket" class="ticket" style="display:none; margin-top:14px;"></div>
+      </div>
+
+      <!-- Step 3: PIN + single Confirm button -->
+      <div id="confirmSection" style="display:none; margin-top:14px;">
+        <label for="staffPin">🔒 Customer PIN</label>
+        <input type="password" id="staffPin" placeholder="Ask customer for their 4-digit PIN" maxlength="4" inputmode="numeric" />
+        <div class="pin-hint" id="pinHint"></div>
+        <button id="confirmBtn" style="width:100%; margin-top:14px;">✓ Confirm &amp; Save Order</button>
+        <div class="msg" id="orderMsg"></div>
+      </div>
+    </div>
+
+    <!-- ── QR Panel ── -->
+    <div class="panel qr-block">
+      <h2 style="justify-content:center;">Customer Registration QR</h2>
+      <div class="qr-item" style="margin:0 auto;">
+        <img src="/api/qrcode" width="200" height="200" alt="Registration QR code" />
+        <div class="link" id="qrLink"></div>
+        <a class="btn-dl" href="/api/qrcode" download="print-rewards-registration-qr.png">⬇ Download QR</a>
+      </div>
+      <p style="font-family:var(--font-m); font-size:12px; color:var(--text-muted); margin-top:14px; text-align:center; line-height:1.7;">
+        New customers scan to register &amp; create PIN.<br>
+        Returning customers: <a href="/checkin.html" target="_blank">check my points →</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Discount Tiers ── -->
+  <div class="panel" style="margin-top:22px;">
+    <h2>Discount tiers</h2>
+    <div id="tierInfo" class="tier-grid"></div>
+  </div>
+
+  <!-- ── Customer Ledger ── -->
+  <div class="panel" style="margin-top:22px;">
+    <h2>Customer ledger</h2>
+    <div class="search-row">
+      <input type="text" id="searchBox" placeholder="Search by name or phone…" />
+    </div>
+    <div id="tableWrap"></div>
+  </div>
+
+  <footer class="note">
+    Data stored in <code>data/customers.json</code> ·
+    Color ₹10 · B&amp;W ₹4 · Xerox ₹3 · 1 point per rupee · discounts apply automatically.
+  </footer>
+</div>
+
+<!-- ── Order History Modal ── -->
+<div id="historyModal" class="modal-overlay" style="display:none;" onclick="closeHistory(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modalTitle">Order History</div>
+        <div class="modal-sub"   id="modalSub"></div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('historyModal').style.display='none'">✕</button>
+    </div>
+    <div id="modalBody" class="modal-body"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

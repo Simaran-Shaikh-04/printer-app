@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Print Rewards — My Points</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="checkin.css" />
+</head>
+<body>
+
+  <!-- Step 1: Phone Entry -->
+  <div id="step-phone" class="screen active">
+    <div class="brand">
+      <div class="brand-icon">🖨️</div>
+      <h1 class="brand-title">Print Rewards</h1>
+      <p class="brand-sub">Check your points &amp; discount</p>
+    </div>
+
+    <div class="input-group">
+      <label for="phoneInput">Your mobile number</label>
+      <input type="tel" id="phoneInput" placeholder="10-digit number" maxlength="10" inputmode="numeric" />
+    </div>
+
+    <button class="btn-primary" id="findBtn">Check my account →</button>
+    <div class="msg" id="phoneMsg"></div>
+    <div class="register-link">New here? <a href="register.html">Register first →</a></div>
+  </div>
+
+  <!-- Step 2: PIN Verification (only if PIN is set) -->
+  <div id="step-pin" class="screen">
+    <div class="brand">
+      <div class="brand-icon">🔒</div>
+      <h1 class="brand-title">Enter PIN</h1>
+      <p class="brand-sub">Enter your 4-digit security PIN</p>
+    </div>
+
+    <div class="input-group">
+      <label for="pinInput">Your PIN</label>
+      <input type="password" id="pinInput" placeholder="4-digit PIN" maxlength="4" inputmode="numeric" />
+    </div>
+
+    <button class="btn-primary" id="verifyBtn">Verify →</button>
+    <div class="msg" id="pinMsg"></div>
+    <button class="btn-back" id="backBtn">← Back</button>
+  </div>
+
+  <!-- Step 3: Loyalty Card -->
+  <div id="step-card" class="screen">
+    <div class="loyalty-card" id="loyaltyCard">
+      <div class="lc-shine"></div>
+      <div class="lc-top">
+        <div class="lc-greeting">Your loyalty account</div>
+        <div class="lc-name" id="cardName">—</div>
+      </div>
+      <div class="lc-stats">
+        <div class="lc-stat">
+          <div class="lc-stat-label">Points Balance</div>
+          <div class="lc-stat-value" id="cardPoints">0</div>
+        </div>
+        <div class="lc-stat">
+          <div class="lc-stat-label">Your Discount</div>
+          <div class="lc-stat-value" id="cardDiscount">0%</div>
+        </div>
+      </div>
+      <div class="lc-tier" id="cardTier">New Member</div>
+    </div>
+
+    <div class="types-summary" id="cardStats"></div>
+    <button class="btn-primary" id="checkAnotherBtn">← Check another account</button>
+  </div>
+
+  <script src="checkin.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join Print Rewards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="checkin.css" />
+  <style>
+    .success-card {
+      width: 100%;
+      background: linear-gradient(135deg, #1c204a 0%, #252a5c 60%, #1e2660 100%);
+      border: 1px solid rgba(108,99,255,0.3);
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .pts-label { font-family: var(--font-m); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.45); margin-bottom: 8px; }
+    .pts-value { font-family: var(--font-d); font-size: 64px; color: #1DB584; line-height: 1; text-shadow: 0 0 30px rgba(29,181,132,0.5); margin-bottom: 6px; }
+    .pts-sub   { font-family: var(--font-m); font-size: 12px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.06em; }
+    .pts-desc  { font-size: 14px; color: rgba(255,255,255,0.6); margin-top: 16px; line-height: 1.6; }
+    .pin-note  {
+      width: 100%; background: rgba(29,181,132,0.1);
+      border: 1px solid rgba(29,181,132,0.35); border-radius: 14px;
+      padding: 16px 18px; font-family: var(--font-m); font-size: 13px;
+      color: #1DB584; margin-bottom: 18px; text-align: center; line-height: 1.5;
+    }
+    .checkin-cta {
+      width: 100%; padding: 17px;
+      background: rgba(29,181,132,0.15); border: 1.5px solid rgba(29,181,132,0.4);
+      border-radius: 14px; font-family: var(--font-d); font-size: 16px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      color: #1DB584; cursor: pointer; transition: all 0.2s;
+    }
+    .checkin-cta:hover { background: rgba(29,181,132,0.25); transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+
+  <!-- Step 1: Details -->
+  <div id="step-form" class="screen active">
+    <div class="brand">
+      <div class="brand-icon">🖨️</div>
+      <h1 class="brand-title">Print Rewards</h1>
+      <p class="brand-sub">Sign up once. Earn points every visit.</p>
+    </div>
+
+    <div class="input-group">
+      <label for="name">Your name</label>
+      <input type="text" id="name" placeholder="e.g. Priya Nair" autocomplete="name" />
+    </div>
+    <div class="input-group">
+      <label for="phone">Mobile number</label>
+      <input type="tel" id="phone" placeholder="10-digit number" maxlength="10" inputmode="numeric" />
+    </div>
+    <div class="input-group">
+      <label for="pin">Create a 4-digit PIN</label>
+      <input type="password" id="pin" placeholder="e.g. 1234" maxlength="4" inputmode="numeric" />
+    </div>
+    <div class="input-group">
+      <label for="pinConfirm">Confirm PIN</label>
+      <input type="password" id="pinConfirm" placeholder="Re-enter PIN" maxlength="4" inputmode="numeric" />
+    </div>
+
+    <button class="btn-primary" id="submitBtn" style="margin-top:6px;">Register →</button>
+    <div class="msg" id="msg"></div>
+
+    <div class="register-link">Already registered? <a href="checkin.html">Check my points →</a></div>
+  </div>
+
+  <!-- Step 2: Success -->
+  <div id="step-success" class="screen">
+    <div class="done-icon">🎉</div>
+    <h2 class="done-title">You're in!</h2>
+    <p class="done-sub">Welcome to Print Rewards</p>
+
+    <div class="success-card">
+      <div class="pts-label">Welcome bonus</div>
+      <div class="pts-value" id="pointsShown">+0</div>
+      <div class="pts-sub">Points added to your account</div>
+      <div class="pts-desc">Give your phone number at the counter.<br>Points and discounts are tracked automatically.</div>
+    </div>
+
+    <div class="pin-note">
+      🔒 Remember your PIN — staff will ask for it to verify your identity at the counter.
+    </div>
+
+    <button class="checkin-cta" onclick="window.location.href='checkin.html'">
+      Check my loyalty points →
+    </button>
+  </div>
+
+  <script src="register.js"></script>
+</body>
+</html>
